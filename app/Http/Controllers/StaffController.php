@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
+use Illuminate\Support\Facades\Log;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -10,8 +13,15 @@ class StaffController extends Controller
     public function __construct() {}
 
     public function createStaff(Request $req) {
-        $data = $req->all();
-        return view("CreateStaff");
+        try {
+            $data = $req->except("__token");
+            Employee::create($data);
+
+            return redirect()->to('/staffs');
+        } catch(Exception $e) {
+            Log::info("Error: ", ["error"=>$e]);
+            return redirect()->back()->withInput();
+        }
     }
 
     public function staffPage() {
@@ -29,6 +39,11 @@ class StaffController extends Controller
             "SickLeaveHours",
         ];
 
-        return view("CreateStaff", ["formInputs" => $formInput]);
+        return view("staffs.CreateStaff", ["formInputs" => $formInput]);
+    }
+
+    public function getAllStaff() {
+
+        return view("staffs.index");
     }
 }

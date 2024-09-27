@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->integer("BusinessEntityID")->increments();
+            $table->integer("BusinessEntityID")->autoIncrement();
             $table->string('NationalIDNumber', 255);
             $table->text('LoginID');
             $table->longText('OrganizationNode');
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->date('HireDate');
             $table->smallInteger('VacationHours');
             $table->smallInteger('SickLeaveHours');
-            $table->dateTime('ModifiedDate');
+            $table->dateTime('ModifiedDate')->default(now());
 
             $table->primary("BusinessEntityID");
 
