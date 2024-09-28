@@ -9,7 +9,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CreateStaffValidate
+class StaffValidate
 {
     /**
      * Handle an incoming request.
@@ -20,17 +20,17 @@ class CreateStaffValidate
     {
         try {
             $request->validate([
-                "NationalIDNumber"=>"required",
-                "LoginID"=>"required",
-                "OrganizationNode"=>"required",
-                "OrganizationLevel"=>["required", "integer"],
-                "JobTitle"=>["required", "max:50"],
-                "Gender"=>["required", "max:1"],
-                "BirthDate"=>["required", "date"],
+                "NationalIDNumber" => "required",
+                "LoginID" => "required",
+                "OrganizationNode" => "required",
+                "OrganizationLevel" => ["required", "integer"],
+                "JobTitle" => ["required", "max:50"],
+                "Gender" => ["required", "max:1"],
+                "BirthDate" => ["required", "date"],
                 "MaritalStatus" => ["required", "max:1"],
-                "HireDate"=>["required", "date"],
-                "VacationHours"=>["required", "integer"],
-                "SickLeaveHours"=>["required", "integer"],
+                "HireDate" => ["required", "date"],
+                "VacationHours" => ["required", "integer"],
+                "SickLeaveHours" => ["required", "integer"],
             ]);
 
             return $next($request);
