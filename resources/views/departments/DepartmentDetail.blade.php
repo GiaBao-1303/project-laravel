@@ -259,30 +259,15 @@
 </head>
 
 <body>
-    <div class="container mt-4">
-        <div class="row height d-flex justify-content-center align-items-center">
-            <div class="col-md-6">
-                <form method="GET" action="/staffs" class="form">
-                    <i class="fa fa-search"></i>
-                    <input value="{{ $search }}" name="search" type="text" class="form-control form-input"
-                        placeholder="Tìm kiếm nhân viên ...">
-                    <button type="submit" class="d-none"></button>
-                </form>
-            </div>
-        </div>
-    </div>
     <div class="container-xl">
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-5">
-                            <h2>Quản lý <b>Nhân viên</b></h2>
+                            <h2>Nhân viên phòng: <b>{{ $department->Name }}</b></h2>
                         </div>
-                        <div class="col-sm-7">
-                            <a href="/staff" class="btn btn-secondary"><i class="material-icons">&#xE147;</i>
-                                <span>Thêm nhân viên</span></a>
-                        </div>
+
                     </div>
                 </div>
                 <table class="table table-striped table-hover">

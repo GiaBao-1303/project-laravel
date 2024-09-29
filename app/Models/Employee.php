@@ -26,4 +26,33 @@ class Employee extends Model
         'SickLeaveHours',
         'ModifiedDate'
     ];
+
+    public function histories()
+    {
+        return $this->hasMany(History::class, 'BusinessEntityID');
+    }
+
+    public function departments()
+    {
+        return $this->hasManyThrough(
+            Department::class,
+            History::class,
+            'BusinessEntityID',
+            'DepartmentID',
+            'BusinessEntityID',
+            'DepartmentID'
+        );
+    }
+
+    public function shifts()
+    {
+        return $this->hasManyThrough(
+            shift::class,
+            History::class,
+            'BusinessEntityID',
+            'ShiftID',
+            'BusinessEntityID',
+            'ShiftID'
+        );
+    }
 }

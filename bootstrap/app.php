@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Middleware\CreateStaffValidate;
+use App\Http\Middleware\DeparmentValidate;
+use App\Http\Middleware\EditStaffValidate;
+use App\Http\Middleware\ShiftMiddleware;
 use App\Http\Middleware\StaffValidate;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -13,7 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            "validate.staff" => StaffValidate::class
+            "validate.create.staff" => CreateStaffValidate::class,
+            "validate.edit.staff" => EditStaffValidate::class,
+            "validate.department" => DeparmentValidate::class,
+            "validate.shift" => ShiftMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

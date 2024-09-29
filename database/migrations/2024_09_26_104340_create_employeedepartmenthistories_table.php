@@ -12,16 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employeedepartmenthistories', function (Blueprint $table) {
-            $table->integer('BusinessEntityID')->nullable();
-            $table->integer('DepartmentID')->nullable();
-            $table->integer('ShiftID')->nullable();
-            $table->date('StartDate')->nullable();
-            $table->date('EndDate');
-            $table->dateTime('ModifiedDate');
+            $table->integer('BusinessEntityID');
+            $table->integer('DepartmentID');
+            $table->integer('ShiftID');
+            $table->date('StartDate');
+            $table->date('EndDate')->nullable();
+            $table->dateTime('ModifiedDate')->default(now());
             $table->timestamps();
 
             $table->primary(['BusinessEntityID', 'DepartmentID', 'ShiftID', 'StartDate']);
-        
+
             $table->foreign('BusinessEntityID')->references('BusinessEntityID')->on('employees');
             $table->foreign('DepartmentID')->references('DepartmentID')->on('departments');
             $table->foreign('ShiftID')->references('ShiftID')->on('shifts');

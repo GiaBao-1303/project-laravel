@@ -259,29 +259,17 @@
 </head>
 
 <body>
-    <div class="container mt-4">
-        <div class="row height d-flex justify-content-center align-items-center">
-            <div class="col-md-6">
-                <form method="GET" action="/staffs" class="form">
-                    <i class="fa fa-search"></i>
-                    <input value="{{ $search }}" name="search" type="text" class="form-control form-input"
-                        placeholder="Tìm kiếm nhân viên ...">
-                    <button type="submit" class="d-none"></button>
-                </form>
-            </div>
-        </div>
-    </div>
     <div class="container-xl">
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-5">
-                            <h2>Quản lý <b>Nhân viên</b></h2>
+                            <h2>Quản lý <b>Ca Làm</b></h2>
                         </div>
                         <div class="col-sm-7">
-                            <a href="/staff" class="btn btn-secondary"><i class="material-icons">&#xE147;</i>
-                                <span>Thêm nhân viên</span></a>
+                            <a href="/shift" class="btn btn-secondary"><i class="material-icons">&#xE147;</i>
+                                <span>Thêm Ca Làm</span></a>
                         </div>
                     </div>
                 </div>
@@ -289,36 +277,27 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>NationalIDNumber</th>
-                            <th>LoginId</th>
-                            <th>JobTitle</th>
-                            <th>Gender</th>
-                            <th>MaritalStatus</th>
-                            <th>BirthDate</th>
+                            <th>Tên Ca Làm</th>
+                            <th>Thời Gian bắt đầu</th>
+                            <th>Thời Gian kết thúc</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($emloyees as $emloyee)
+                        @foreach ($shifts as $shift)
                             <tr>
-                                <td>{{ $emloyee->BusinessEntityID }}</td>
-                                <td>{{ $emloyee->NationalIDNumber }}</td>
+                                <td>{{ $shift->ShiftID }}</td>
                                 <td>
-                                    <a href="/staffs/{{ $emloyee->BusinessEntityID }}">
-                                        <img width="50px" height="50px"
-                                            src="{{ $emloyee->Gender === '0' ? asset('/assets/staffs/avatar-boy.png') : asset('/assets/staffs/avatar-girl.png') }}"
-                                            class="avatar" alt="Avatar">
-                                        {{ $emloyee->LoginID }}
+                                    <a href="/shifts/{{ $shift->ShiftID }}">
+                                        {{ $shift->Name }}
                                     </a>
                                 </td>
-                                <td>{{ $emloyee->JobTitle }}</td>
-                                <td>{{ $emloyee->Gender === '0' ? 'Nam' : 'Nữ' }}</td>
-                                <td>{{ $emloyee->MaritalStatus === '0' ? 'Độc thân' : 'Đã kết hôn' }}</td>
-                                <td><span class="status text-success">&bull;</span> {{ $emloyee->BirthDate }}</td>
+                                <td>{{ $shift->StartTime }}</td>
+                                <td>{{ $shift->EndTime }}</td>
                                 <td class="d-flex">
-                                    <a href="/staffs/{{ $emloyee->BusinessEntityID }}" class="settings" title="Sửa"
+                                    <a href="/shifts/{{ $shift->ShiftID }}/edit" class="settings" title="Sửa"
                                         data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                                    <form method="POST" action="/staffs/{{ $emloyee->BusinessEntityID }}/delete">
+                                    <form method="POST" action="/shifts/{{ $shift->ShiftID }}/delete">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="delete" title="Xóa" data-toggle="tooltip">

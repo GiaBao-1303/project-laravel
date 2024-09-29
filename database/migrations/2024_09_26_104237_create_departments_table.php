@@ -15,7 +15,7 @@ return new class extends Migration
             $table->integer("DepartmentID")->autoIncrement();
             $table->longText('Name');
             $table->longText('GroupName');
-            $table->dateTime('ModifiedDate');
+            $table->dateTime('ModifiedDate')->default(now());
 
             $table->primary('DepartmentID');
 

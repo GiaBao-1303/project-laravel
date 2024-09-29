@@ -209,79 +209,22 @@
             margin-top: 10px;
             font-size: 13px;
         }
-
-        .form {
-
-            position: relative;
-        }
-
-        .form .fa-search {
-
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: #9ca3af;
-
-        }
-
-        .form span {
-
-            position: absolute;
-            right: 17px;
-            top: 13px;
-            padding: 2px;
-            border-left: 1px solid #d1d5db;
-
-        }
-
-        .left-pan {
-            padding-left: 7px;
-        }
-
-        .left-pan i {
-
-            padding-left: 10px;
-        }
-
-        .form-input {
-
-            height: 55px;
-            text-indent: 33px;
-            border-radius: 10px;
-        }
-
-        .form-input:focus {
-
-            box-shadow: none;
-            border: none;
-        }
     </style>
 </head>
 
 <body>
-    <div class="container mt-4">
-        <div class="row height d-flex justify-content-center align-items-center">
-            <div class="col-md-6">
-                <form method="GET" action="/staffs" class="form">
-                    <i class="fa fa-search"></i>
-                    <input value="{{ $search }}" name="search" type="text" class="form-control form-input"
-                        placeholder="Tìm kiếm nhân viên ...">
-                    <button type="submit" class="d-none"></button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="container-xl">
+
+    <div class="container-xl position-relative">
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-5">
-                            <h2>Quản lý <b>Nhân viên</b></h2>
+                            <h2>Quản lý <b>Phòng Ban</b></h2>
                         </div>
                         <div class="col-sm-7">
-                            <a href="/staff" class="btn btn-secondary"><i class="material-icons">&#xE147;</i>
-                                <span>Thêm nhân viên</span></a>
+                            <a href="/department" class="btn btn-secondary"><i class="material-icons">&#xE147;</i>
+                                <span>Thêm phòng ban</span></a>
                         </div>
                     </div>
                 </div>
@@ -289,42 +232,48 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>NationalIDNumber</th>
-                            <th>LoginId</th>
-                            <th>JobTitle</th>
-                            <th>Gender</th>
-                            <th>MaritalStatus</th>
-                            <th>BirthDate</th>
+                            <th>Name</th>
+                            <th>GroupName</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($emloyees as $emloyee)
+                        @foreach ($departments as $department)
                             <tr>
-                                <td>{{ $emloyee->BusinessEntityID }}</td>
-                                <td>{{ $emloyee->NationalIDNumber }}</td>
                                 <td>
-                                    <a href="/staffs/{{ $emloyee->BusinessEntityID }}">
-                                        <img width="50px" height="50px"
-                                            src="{{ $emloyee->Gender === '0' ? asset('/assets/staffs/avatar-boy.png') : asset('/assets/staffs/avatar-girl.png') }}"
-                                            class="avatar" alt="Avatar">
-                                        {{ $emloyee->LoginID }}
+                                    {{ $department->DepartmentID }}
+                                </td>
+
+                                <td>
+                                    <a href="/departments/{{ $department->DepartmentID }}">
+                                        {{ $department->Name }}
                                     </a>
                                 </td>
-                                <td>{{ $emloyee->JobTitle }}</td>
-                                <td>{{ $emloyee->Gender === '0' ? 'Nam' : 'Nữ' }}</td>
-                                <td>{{ $emloyee->MaritalStatus === '0' ? 'Độc thân' : 'Đã kết hôn' }}</td>
-                                <td><span class="status text-success">&bull;</span> {{ $emloyee->BirthDate }}</td>
-                                <td class="d-flex">
-                                    <a href="/staffs/{{ $emloyee->BusinessEntityID }}" class="settings" title="Sửa"
-                                        data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                                    <form method="POST" action="/staffs/{{ $emloyee->BusinessEntityID }}/delete">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="delete" title="Xóa" data-toggle="tooltip">
-                                            <i class="material-icons text-danger">&#xE5C9;</i>
-                                        </button>
-                                    </form>
+
+                                <td>
+                                    {{ $department->GroupName }}
+                                </td>
+
+                                <td class="d-flex align-items-center justify-content-center">
+
+                                    <div>
+                                        <a href="/departments/{{ $department->DepartmentID }}/edit"
+                                            style="outline: none !important;" type="button"
+                                            class="edit-department material-icons" data-target="#exampleModal">
+                                            <i class="material-icons text-warning">&#x270E;</i>
+                                        </a>
+                                    </div>
+
+                                    <div>
+                                        <form method="POST"
+                                            action="/departments/{{ $department->DepartmentID }}/delete">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="delete" title="Xóa" data-toggle="tooltip">
+                                                <i class="material-icons text-danger">&#xE5C9;</i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

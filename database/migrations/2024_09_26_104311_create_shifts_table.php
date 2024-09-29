@@ -16,7 +16,7 @@ return new class extends Migration
             $table->longText('Name');
             $table->time('StartTime');
             $table->time('EndTime');
-            $table->dateTime('ModifiedDate');
+            $table->dateTime('ModifiedDate')->default(now());
 
             $table->primary('ShiftID');
 

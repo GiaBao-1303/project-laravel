@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\Employee;
+use App\Models\History;
+use App\Models\shift;
 use Illuminate\Support\Facades\Log;
 use Exception;
 use Illuminate\Http\Request;
@@ -29,10 +32,13 @@ class StaffController extends Controller
     }
 
     // --------------------------------------- GET Requests --------------------------------
-    public function staffPage()
+    public function createStaffPage()
     {
+        $formInputs = $this->formInput;
+        $departments = Department::all();
+        $shifts = shift::all();
 
-        return view("staffs.CreateStaff", ["formInputs" => $this->formInput]);
+        return view("staffs.CreateStaff", compact('shifts', 'departments', 'formInputs'));
     }
 
     public function staffPageDetail($staffId)
@@ -49,11 +55,21 @@ class StaffController extends Controller
         return view("staffs.StaffEdit", compact('emloyee'));
     }
 
-    public function getAllStaff()
+    public function getAndSearch(Request $req)
     {
-        $emloyees = Employee::all();
+        $search = $req->query('search');
 
-        return view("staffs.index", compact('emloyees'));
+        if ($search) {
+            $emloyees = Employee::where("LoginID", "LIKE", "%{$search}%")
+                ->orWhere("JobTitle", "LIKE", "%{$search}%")
+                ->orWhere("BirthDate", "LIKE", "%{$search}%")
+                ->orWhere("NationalIDNumber", "LIKE", "%{$search}%")
+                ->get();
+        } else {
+            $emloyees = Employee::all();
+        }
+
+        return view("staffs.index", compact('emloyees', 'search'));
     }
 
     // --------------------------------------- POST Requests --------------------------------
@@ -61,8 +77,22 @@ class StaffController extends Controller
     public function createStaff(Request $req)
     {
         try {
-            $data = $req->except("__token");
-            Employee::create($data);
+            $data = $req->except("__token", "DepartmentID", "ShiftID");
+            $employee = Employee::create($data);
+            $departmentId = $req->get("DepartmentID");
+            $shiftId = $req->get("ShiftID");
+
+            $department = Department::where(["DepartmentID" => $departmentId])->first();
+            $shift = shift::where(["ShiftID" => $shiftId])->first();
+            if (!$department || !$shift) abort(404);
+
+            History::create([
+                "BusinessEntityID" => $employee->BusinessEntityID,
+                "DepartmentID" => $department->DepartmentID,
+                "ShiftID" => $shift->ShiftID,
+                "StartDate" => now(),
+                "EndDate" => now()
+            ]);
 
             return redirect()->to('/staffs');
         } catch (Exception $e) {
@@ -79,6 +109,7 @@ class StaffController extends Controller
             $data = $req->except(["__token", "ModifiedDate"]);
             $employee = Employee::where("BusinessEntityID", $staffId)->first();
             if (!$employee) abort(404);
+            $data['ModifiedDate'] = now();
 
             $employee->update($data);
 

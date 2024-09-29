@@ -33,8 +33,23 @@
                 @foreach ($formInputs as $inputData)
                     <div class="form-group col-6">
                         <label class="text-white" for="{{ $inputData }}">{{ $inputData }}</label>
-                        <input type="text" name="{{ $inputData }}" class="form-control my-2"
-                            id="{{ $inputData }}" value="{{ old($inputData) }}">
+                        @if ($inputData === 'Gender')
+                            <select name="{{ $inputData }}" class="form-select">
+                                <option {{ !old($inputData) ? 'selected' : '' }}>Giới tính</option>
+                                <option {{ old($inputData) === '0' ? 'selected' : '' }} value="0">Nam</option>
+                                <option {{ old($inputData) === '1' ? 'selected' : '' }} value="1">Nữ</option>
+                            </select>
+                        @elseif ($inputData === 'MaritalStatus')
+                            <select name="{{ $inputData }}" class="form-select">
+                                <option {{ !old($inputData) ? 'selected' : '' }}>Tình trạng hôn nhân</option>
+                                <option {{ old($inputData) === '0' ? 'selected' : '' }} value="0">Độc thân</option>
+                                <option {{ old($inputData) === '1' ? 'selected' : '' }} value="1">Đã kết hôn
+                                </option>
+                            </select>
+                        @else
+                            <input type="text" name="{{ $inputData }}" class="form-control my-2"
+                                id="{{ $inputData }}" value="{{ old($inputData) }}">
+                        @endif
                         @error($inputData)
                             <small class="d-block form-text mb-2 text-danger">
                                 {{ $message }}
@@ -43,7 +58,40 @@
                     </div>
                 @endforeach
 
-                <div class="d-flex justify-content-center mt-4">
+                <div class="form-group col-6">
+                    <label class="text-white" for="DepartmentID">Phòng ban</label>
+                    <select id="DepartmentID" name="DepartmentID" class="form-select">
+                        <option {{ old('DepartmentID') ? '' : 'selected' }}>Chọn phòng ban</option>
+                        @foreach ($departments as $department)
+                            <option {{ old('DepartmentID') === (string) $department->DepartmentID ? 'selected' : '' }}
+                                value="{{ $department->DepartmentID }}">{{ $department->Name }}</option>
+                        @endforeach
+                    </select>
+                    @error('DepartmentID')
+                        <small class="d-block form-text mb-2 text-danger">
+                            {{ $message }}
+                        </small>
+                    @enderror
+                </div>
+
+                <div class="form-group col-6">
+                    <label class="text-white" for="ShiftID">Ca làm</label>
+                    <select id="ShiftID" name="ShiftID" class="form-select">
+                        <option {{ old('ShiftID') ? '' : 'selected' }}>Lựa Chọn Ca Làm</option>
+                        @foreach ($shifts as $shift)
+                            <option {{ old('ShiftID') === (string) $shift->ShiftID ? 'selected' : '' }}
+                                value="{{ $shift->ShiftID }}">{{ $shift->Name }}</option>
+                        @endforeach
+                    </select>
+                    @error('ShiftID')
+                        <small class="d-block form-text mb-2 text-danger">
+                            {{ $message }}
+                        </small>
+                    @enderror
+                </div>
+
+
+                <div class="d-flex justify-content-center mt-2">
                     <button type="submit" class="btn btn-primary">Tạo nhân viên</button>
                 </div>
             </form>
