@@ -22,9 +22,9 @@ return new class extends Migration
 
             $table->primary(['BusinessEntityID', 'DepartmentID', 'ShiftID', 'StartDate']);
 
-            $table->foreign('BusinessEntityID')->references('BusinessEntityID')->on('employees');
-            $table->foreign('DepartmentID')->references('DepartmentID')->on('departments');
-            $table->foreign('ShiftID')->references('ShiftID')->on('shifts');
+            $table->foreign('BusinessEntityID')->references('BusinessEntityID')->on('employees')->onDelete("cascade");
+            $table->foreign('DepartmentID')->references('DepartmentID')->on('departments')->onDelete("cascade");
+            $table->foreign('ShiftID')->references('ShiftID')->on('shifts')->onDelete("cascade");
         });
     }
 
