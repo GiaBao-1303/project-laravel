@@ -41,6 +41,13 @@
             border-radius: 3px 3px 0 0;
         }
 
+        button {
+            outline: none;
+            border: none;
+            display: flex;
+            background: transparent
+        }
+
         .table-title h2 {
             margin: 5px 0 0;
             font-size: 24px;

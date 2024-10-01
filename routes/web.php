@@ -44,6 +44,9 @@ Route::put("/departments/{departmentId}/edit", [DepartmentController::class, "ed
 Route::delete("/departments/{departmentId}/delete", [DepartmentController::class, "departmentDelete"])
     ->name("departmentDelete");
 
+Route::post("/departments/{departmentId}/assignment", [DepartmentController::class, "addStaffToDepartment"])
+    ->name("addStaffToDepartment");
+
 // Page
 Route::get("/department", [DepartmentController::class, "createDepartmentPage"])
     ->name("createDepartmentPage");
@@ -56,6 +59,9 @@ Route::get("/departments/{departmentId}", [DepartmentController::class, "StaffIn
 
 Route::get("/departments/{departmentId}/edit", [DepartmentController::class, "departmentEditPage"])
     ->name("departmentEditPage");
+
+Route::get("/departments/{departmentId}/assignment", [DepartmentController::class, "addStaffToDepartmentPage"])
+    ->name("addStaffToDepartmentPage");
 
 
 // ---------------------------------------- Shift ----------------------------------------
@@ -71,6 +77,8 @@ Route::put("/shifts/{shiftId}/edit", [ShiftController::class, "editShift"])
     ->name("editShift")
     ->middleware("validate.shift");
 
+Route::post("/shifts/{shiftId}/assignment", [ShiftController::class, "assignmentShift"])
+    ->name("assignmentShift");
 
 // Page
 Route::get("/shift", [ShiftController::class, "ShiftCreatingPage"])
@@ -84,3 +92,6 @@ Route::get("/shifts/{shiftId}/edit", [ShiftController::class, "editShiftPage"])
 
 Route::get("/shifts/{shiftId}", [ShiftController::class, "shiftDetails"])
     ->name("shiftDetails");
+
+Route::get("/shifts/{shiftId}/assignment", [ShiftController::class, "shiftAssignmentPage"])
+    ->name("shiftAssignmentPage");

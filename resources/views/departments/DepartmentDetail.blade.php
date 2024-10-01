@@ -267,7 +267,11 @@
                         <div class="col-sm-5">
                             <h2>Nhân viên phòng: <b>{{ $department->Name }}</b></h2>
                         </div>
-
+                        <div class="col-sm-7">
+                            <a href="/departments/{{ $department->DepartmentID }}/assignment"
+                                class="btn btn-secondary"><i class="material-icons">&#xE147;</i>
+                                <span>Thêm nhân viên vào phòng ban</span></a>
+                        </div>
                     </div>
                 </div>
                 <table class="table table-striped table-hover">
@@ -280,7 +284,6 @@
                             <th>Gender</th>
                             <th>MaritalStatus</th>
                             <th>BirthDate</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -300,17 +303,6 @@
                                 <td>{{ $emloyee->Gender === '0' ? 'Nam' : 'Nữ' }}</td>
                                 <td>{{ $emloyee->MaritalStatus === '0' ? 'Độc thân' : 'Đã kết hôn' }}</td>
                                 <td><span class="status text-success">&bull;</span> {{ $emloyee->BirthDate }}</td>
-                                <td class="d-flex">
-                                    <a href="/staffs/{{ $emloyee->BusinessEntityID }}" class="settings" title="Sửa"
-                                        data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                                    <form method="POST" action="/staffs/{{ $emloyee->BusinessEntityID }}/delete">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="delete" title="Xóa" data-toggle="tooltip">
-                                            <i class="material-icons text-danger">&#xE5C9;</i>
-                                        </button>
-                                    </form>
-                                </td>
                             </tr>
                         @endforeach
                     </tbody>

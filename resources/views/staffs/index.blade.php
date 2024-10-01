@@ -152,6 +152,13 @@
             color: #10c469;
         }
 
+        button {
+            outline: none;
+            border: none;
+            display: flex;
+            background: transparent
+        }
+
         .text-info {
             color: #62c9e8;
         }

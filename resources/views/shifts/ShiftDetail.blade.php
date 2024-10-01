@@ -130,6 +130,13 @@
             color: #F44336;
         }
 
+        button {
+            outline: none;
+            border: none;
+            display: flex;
+            background: transparent
+        }
+
         table.table td i {
             font-size: 19px;
         }
@@ -267,7 +274,11 @@
                         <div class="col-sm-5">
                             <h2> Ngày {{ $shift->created_at }} <b>{{ $shift->Name }}</b></h2>
                         </div>
-
+                        <div class="col-sm-7">
+                            <a href="/shifts/{{ $shift->ShiftID }}/assignment" class="btn btn-secondary"><i
+                                    class="material-icons">&#xE147;</i>
+                                <span>Phân Công</span></a>
+                        </div>
                     </div>
                 </div>
                 <table class="table table-striped table-hover">

@@ -18,4 +18,21 @@ class Department extends Model
         "GroupName",
         "ModifiedDate"
     ];
+
+    public function historys()
+    {
+        return $this->hasMany(History::class, "DepartmentID", "DepartmentID");
+    }
+
+    public function employees()
+    {
+        return $this->hasManyThrough(
+            Employee::class,
+            History::class,
+            "DepartmentID",
+            "BusinessEntityID",
+            "DepartmentID",
+            "BusinessEntityID",
+        );
+    }
 }
